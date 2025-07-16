@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Horario de Materias</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1><i class="fas fa-calendar-alt"></i> Gestión de Horario de Materias</h1>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="capture-carrera" class="card">
+            <h2><i class="fas fa-graduation-cap"></i> 0. Gestión de Carreras</h2>
+            <div class="input-group">
+                <input type="text" id="nombreCarrera" placeholder="Nombre de la carrera (ej. Lic. en Educación)" required>
+                <button id="agregarCarrera"><i class="fas fa-plus-circle"></i> Agregar Carrera</button>
+            </div>
+            <div class="search-group">
+                <input type="text" id="buscarCarrera" placeholder="Buscar carrera...">
+                <button id="limpiarBusquedaCarrera"><i class="fas fa-times-circle"></i> Limpiar</button>
+            </div>
+            <div class="list-container">
+                <ul id="listaCarreras" class="item-list">
+                    </ul>
+            </div>
+            <div class="select-carrera-group">
+                <label for="selectActiveCarrera">Seleccionar Carrera Activa:</label>
+                <select id="selectActiveCarrera"></select>
+            </div>
+        </section>
+
+        <section id="capture-materia" class="card">
+            <h2><i class="fas fa-book"></i> 1. Captura de Materia</h2>
+            <div class="input-group">
+                <input type="text" id="nombreMateria" placeholder="Nombre de la materia" required>
+                <input type="text" id="especialidadMateria" placeholder="Especialidad (ej. Matemáticas, Programación)" required>
+                <button id="agregarMateria"><i class="fas fa-plus-circle"></i> Agregar Materia</button>
+            </div>
+            <div class="search-group">
+                <input type="text" id="buscarMateria" placeholder="Buscar materia...">
+                <button id="limpiarBusquedaMateria"><i class="fas fa-times-circle"></i> Limpiar</button>
+            </div>
+            <div class="list-container">
+                <ul id="listaMaterias" class="item-list">
+                    </ul>
+            </div>
+        </section>
+
+        <section id="capture-maestro" class="card">
+            <h2><i class="fas fa-chalkboard-teacher"></i> 2. Captura de Maestro</h2>
+            <div class="input-group">
+                <input type="text" id="nombreMaestro" placeholder="Nombre del maestro" required>
+                <input type="text" id="especialidadMaestro" placeholder="Especialidad (ej. Cálculo, Bases de Datos)" required>
+                <button id="agregarMaestro"><i class="fas fa-plus-circle"></i> Agregar Maestro</button>
+            </div>
+            <div class="search-group">
+                <input type="text" id="buscarMaestro" placeholder="Buscar maestro...">
+                <button id="limpiarBusquedaMaestro"><i class="fas fa-times-circle"></i> Limpiar</button>
+            </div>
+            <div class="list-container">
+                <ul id="listaMaestros" class="item-list">
+                    </ul>
+            </div>
+        </section>
+
+        <section id="schedule-sections">
+            <section id="horario-semanal" class="card">
+                <h2><i class="fas fa-calendar-day"></i> 3. Horario Semanal (Lunes a Viernes)</h2>
+                <p class="info-text">Clases: 50 minutos. Primera clase: 7:00 AM. Receso: 9:30 AM - 10:00 AM.</p>
+                <div class="schedule-grid">
+                    </div>
+            </section>
+
+            <section id="horario-sabado" class="card">
+                <h2><i class="fas fa-calendar-week"></i> 4. Horario Sábado</h2>
+                <p class="info-text">Clases: 1 hora. Primera clase: 8:00 AM.</p>
+                <div class="schedule-grid">
+                    </div>
+            </section>
+        </section>
+
+        <section id="mostrar-horario" class="card">
+            <h2><i class="fas fa-list-alt"></i> 5. Horario Generado</h2>
+            <div id="horarioCompleto" class="schedule-output">
+                </div>
+        </section>
+
+        <section id="acciones-generales" class="card export-actions">
+            <h2><i class="fas fa-cogs"></i> 6 & 7. Acciones</h2>
+            <div class="button-group">
+                <button id="exportPdf"><i class="fas fa-file-pdf"></i> Exportar a PDF</button>
+                <button id="exportExcel"><i class="fas fa-file-excel"></i> Exportar a Excel</button>
+                <button id="printSchedule"><i class="fas fa-print"></i> Imprimir</button>
+            </div>
+            <div class="button-group reset-group">
+                <button id="eliminarParcialmente" class="delete-btn"><i class="fas fa-eraser"></i> Eliminar Último Agregado</button>
+                <button id="reiniciarTodo" class="delete-btn"><i class="fas fa-redo-alt"></i> Reiniciar Todo</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Gestión de Horario de Materias. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div id="assignModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Asignar Clase</h3>
+            <p><strong>Día:</strong> <span id="modalDay"></span></p>
+            <p><strong>Hora:</strong> <span id="modalTime"></span></p>
+            <label for="selectMateria">Materia:</label>
+            <select id="selectMateria"></select>
+            <label for="selectMaestro">Maestro:</label>
+            <select id="selectMaestro"></select>
+            <div class="modal-buttons">
+                <button id="assignBtn"><i class="fas fa-check-circle"></i> Asignar</button>
+                <button id="unassignBtn" class="delete-btn"><i class="fas fa-minus-circle"></i> Desasignar</button>
+                <button id="cancelBtn"><i class="fas fa-times-circle"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script> <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
